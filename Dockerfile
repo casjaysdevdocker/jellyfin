@@ -1,4 +1,4 @@
-FROM casjaysdevdocker/debian:latest AS build
+FROM jellyfin/jellyfin:latest AS build
 
 ARG DEBIAN_VERSION="bullseye"
 
@@ -48,8 +48,8 @@ RUN echo 'Running cleanup' ; \
 FROM scratch
 
 ARG \
-  SERVICE_PORT="80" \
-  EXPOSE_PORTS="80" \
+  SERVICE_PORT="8096" \
+  EXPOSE_PORTS="8096" \
   PHP_SERVER="jellyfin" \
   NODE_VERSION="system" \
   NODE_MANAGER="system" \
@@ -103,4 +103,3 @@ EXPOSE $EXPOSE_PORTS
 #CMD [ "" ]
 ENTRYPOINT [ "tini", "-p", "SIGTERM", "--", "/usr/local/bin/entrypoint.sh" ]
 HEALTHCHECK --start-period=1m --interval=2m --timeout=3s CMD [ "/usr/local/bin/entrypoint.sh", "healthcheck" ]
-
