@@ -25,7 +25,7 @@ RUN set -ex; \
   apt-get update && apt-get install -yy locales && echo "$LANG UTF-8" >"/etc/locale.gen" ; \
   dpkg-reconfigure --frontend=noninteractive locales ; update-locale LANG=$LANG ; \
   echo 'export DEBIAN_FRONTEND="'${DEBIAN_FRONTEND}'"' >"/etc/profile.d/apt.sh" && chmod 755 "/etc/profile.d/apt.sh" && \
-  DEBIAN_CODENAME="" ; \
+  DEBIAN_CODENAME="$(grep -s 'VERSION_CODENAME=' /etc/os-release | awk -F'=' '{print $2}')" ; \
   [ -z "$DEBIAN_CODENAME" ] || sed -i "s|$DEBIAN_CODENAME|$DEBIAN_VERSION|g" "/etc/apt/sources.list" ; \
   apt-get update -yy && apt-get upgrade -yy && apt-get install -yy ${PACK_LIST}
 
@@ -56,7 +56,7 @@ ARG \
   BUILD_VERSION="latest" \
   LICENSE="MIT" \
   IMAGE_NAME="jellyfin" \
-  BUILD_DATE="Sun Nov 13 10:23:07 PM EST 2022" \
+  BUILD_DATE="Sun Nov 13 10:46:45 PM EST 2022" \
   TIMEZONE="America/New_York"
 
 LABEL maintainer="CasjaysDev <docker-admin@casjaysdev.com>" \
